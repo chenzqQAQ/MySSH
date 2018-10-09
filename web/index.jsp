@@ -9,6 +9,11 @@
 <html>
   <head>
     <title>主页面</title>
+    <script type="text/javascript">
+      function a() {
+
+      }
+    </script>
   </head>
   <body>
   准备ssh框架项目
