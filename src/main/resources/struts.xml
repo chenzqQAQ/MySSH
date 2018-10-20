@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+        "http://struts.apache.org/dtds/struts-2.5.dtd">
+
+<struts>
+    <constant name="struts.objectFactory" value="spring"/>
+    <constant name="struts.custom.i18n.resources" value="golbal"/>
+    <constant name="struts.i18n.encoding" value="UTF-8"/>
+    <constant name="struts.action.extension" value="action"/>
+    <package name="login" extends="struts-default">
+        <action name="login" class="login" method="execute">
+            <result name="success">success.jsp</result>
+            <result name="error">index.jsp</result>
+        </action>
+        <!-- <action name="registerList" class="registerAction" method="registerAll">
+             <result name="success">/registration/index.jsp</result>
+         </action>-->
+        <!--<action name="registerAdd" class="registerAction" method="registerAdd">
+            <result name="success"  type="redirectAction">/registerList</result>
+        </action>
+        <action name="registerFind" class="registerAction" method="registerFind">
+            <result name="success">/registration/edit.jsp</result>
+        </action>
+        <action name="registerUpdate" class="registerAction" method="registerUpdate">
+            <result name="success" type="redirectAction">/registerList</result>
+        </action>-->
+        <action name="deptlist" class="deptAction" method="deptAll">
+            <result name="success">/Dept/deptList.jsp</result>
+        </action>
+        <action name="deptAdd" class="deptAction" method="deptAdd">
+            <result name="success" type="redirectAction">/deptlist</result>
+        </action>
+        <action name="deptFind" class="deptAction" method="deptFind">
+            <result name="success">/Dept/deptEdit.jsp</result>
+        </action>
+        <action name="deptUpdate" class="deptAction" method="deptUpdate">
+            <result name="success" type="redirectAction">deptlist</result>
+        </action>
+        <action name="userAdd" class="userAction" method="add">
+            <result name="success">/success.jsp</result>
+        </action>
+    </package>
+<!--    <package name="ajax" extends="json-default">
+        <action name="depAjax" class="departAction" method="allDep">
+            <result name="success" type="json">
+                <param name="root">result</param>
+            </result>
+        </action>
+        <action name="docAjax" class="docAction" method="docFind">
+            <result name="success" type="json">
+                <param name="root">result</param>
+            </result>
+        </action>
+    </package>-->
+</struts>

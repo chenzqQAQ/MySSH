@@ -27,7 +27,15 @@ public class EmpEntity {
     private Long sal;
     private Long comm;
     private DeptEntity deptEntity;
+    /*public long deptno;
 
+    public long getDeptno() {
+        return deptno;
+    }
+
+    public void setDeptno(long deptno) {
+        this.deptno = deptno;
+    }*/
 
     public long getEmpno() {
         return empno;

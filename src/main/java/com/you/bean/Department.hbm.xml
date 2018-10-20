@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.you.bean.Department" table="DEPARTMENT" schema="SCOTT">
+        <id name="depid">
+            <column name="DEPID" sql-type="number(11)" precision="11"/>
+        </id>
+        <property name="depnum">
+            <column name="DEPNUM" sql-type="varchar2(100)" length="100"/>
+        </property>
+        <property name="depname">
+            <column name="DEPNAME" sql-type="varchar2(100)" length="100" />
+        </property>
+        <bag name="docList" lazy="false">
+            <key column="DOCID"/>
+            <one-to-many class="com.you.bean.Doctor"/>
+        </bag>
+    </class>
+</hibernate-mapping>

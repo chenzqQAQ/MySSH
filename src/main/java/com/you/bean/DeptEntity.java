@@ -23,8 +23,17 @@ public class DeptEntity {
      * 部门编号
      */
     private long deptno;
+    /**
+     * 部门名称
+     */
     private String dname;
+    /**
+     * 部门地址
+     */
     private String loc;
+    /**
+     * 员工信息
+     */
     private Set<EmpEntity> empEntities;
 
     public long getDeptno() {
@@ -63,16 +72,22 @@ public class DeptEntity {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         DeptEntity that = (DeptEntity) o;
 
-        if (deptno != that.deptno) return false;
-        if (dname != null ? !dname.equals(that.dname) : that.dname != null) return false;
-        if (loc != null ? !loc.equals(that.loc) : that.loc != null) return false;
-
-        return true;
+        if (deptno != that.deptno) {
+            return false;
+        }
+        if (dname != null ? !dname.equals(that.dname) : that.dname != null) {
+            return false;
+        }
+        return loc != null ? loc.equals(that.loc) : that.loc == null;
     }
 
     @Override

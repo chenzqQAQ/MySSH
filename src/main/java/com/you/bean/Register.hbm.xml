@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.you.bean.Register" table="REGISTER" schema="SCOTT">
+        <id name="medicalnum">
+            <column name="MEDICALNUM" sql-type="number(11)" precision="11"/>
+            <generator class="sequence">
+                <param name="sequence_name">SEQ_EMP</param>
+            </generator>
+        </id>
+        <property name="registername">
+            <column name="REGISTERNAME" sql-type="varchar2(30)" length="30"/>
+        </property>
+        <property name="identifiertype">
+            <column name="IDENTIFIERTYPE" sql-type="number(11)" precision="11"/>
+        </property>
+        <property name="identifiernum">
+            <column name="IDENTIFIERNUM" sql-type="varchar2(100)" length="100"/>
+        </property>
+        <property name="socialsecuritynum">
+            <column name="SOCIALSECURITYNUM" sql-type="varchar2(30)" length="30"/>
+        </property>
+        <property name="phonenum">
+            <column name="PHONENUM" sql-type="varchar2(30)" length="30"/>
+        </property>
+        <property name="expenseflag">
+            <column name="EXPENSEFLAG" sql-type="number(11)" precision="11"/>
+        </property>
+        <property name="sex">
+            <column name="SEX" sql-type="number(11)" precision="11"/>
+        </property>
+        <property name="age">
+            <column name="AGE" sql-type="number(11)" precision="11"/>
+        </property>
+        <property name="profession">
+            <column name="PROFESSION" sql-type="varchar2(200)" length="200"/>
+        </property>
+        <property name="czflag">
+            <column name="CZFLAG" sql-type="number(11)" precision="11"/>
+        </property>
+        <!--<property name="doctorid">
+            <column name="DOCTORID" sql-type="number(11)" precision="11"/>
+        </property>-->
+        <many-to-one name="doctor" column="doctorid" class="com.you.bean.Doctor" lazy="false" unique="true">
+        </many-to-one>
+        <property name="flag">
+            <column name="FLAG" sql-type="number(11)" precision="11"/>
+        </property>
+        <property name="remark">
+            <column name="REMARK" sql-type="varchar2(500)" length="500"/>
+        </property>
+    </class>
+</hibernate-mapping>

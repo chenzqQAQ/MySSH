@@ -6,7 +6,7 @@
 
     <class name="com.you.bean.DeptEntity" table="DEPT" schema="SCOTT">
         <id name="deptno">
-            <column name="DEPTNO" sql-type="number(2)" precision="2"/>
+            <column name="DEPTNO" sql-type="number(4)" precision="4"/>
             <!--自动生成主键值-->
             <generator class="native">
                 <param name="sequence_name">SEQ_DEPT</param>
@@ -16,9 +16,9 @@
             <column name="DNAME" sql-type="varchar2(14)" length="14" not-null="true"/>
         </property>
         <property name="loc">
-            <column name="LOC" sql-type="varchar2(13)" length="13" not-null="true"/>
+            <column name="LOC" sql-type="varchar2(13)" length="13"/>
         </property>
-        <set name="empEntities" table="EMP" schema="SCOTT" lazy="false">
+        <set name="empEntities" table="EMP" schema="SCOTT" lazy="false" inverse="false" cascade="save-update">
             <key column="DEPTNO"/>
             <one-to-many class="EmpEntity"/>
         </set>

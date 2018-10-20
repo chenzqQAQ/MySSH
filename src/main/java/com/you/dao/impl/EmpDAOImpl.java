@@ -12,9 +12,8 @@ package com.you.dao.impl;
 import com.you.bean.EmpEntity;
 import com.you.dao.EmpDAO;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
+import test.Test;
 
 import java.io.Serializable;
 import java.util.List;
@@ -40,14 +39,8 @@ public class EmpDAOImpl implements EmpDAO {
     @Override
     public EmpEntity getEmp(Serializable serializable) {
 
-        //加载hibernate.properties文件
-        Configuration configuration = new Configuration();
-        //加载xml文件
-        configuration.configure();
-        //创建session工厂
-        SessionFactory sessionFactory = configuration.buildSessionFactory();
         //获得一个会话，相当于一个物理连接,用于保存持久类。提供增删改查等操作
-        Session session = sessionFactory.openSession();
+        Session session = Test.SESSIONFACTORY.openSession();
         //开启事务
         Transaction transaction = null;
         EmpEntity empEntity = null;
@@ -74,14 +67,8 @@ public class EmpDAOImpl implements EmpDAO {
 
     @Override
     public List listEmp() {
-        //加载hibernate.properties文件
-        Configuration configuration = new Configuration();
-        //加载xml文件
-        configuration.configure();
-        //创建session工厂
-        SessionFactory sessionFactory = configuration.buildSessionFactory();
         //获得一个会话，相当于一个物理连接,用于保存持久类。提供增删改查等操作
-        Session session = sessionFactory.openSession();
+        Session session = Test.SESSIONFACTORY.openSession();
         //开启事务
         Transaction transaction = null;
         List list = null;

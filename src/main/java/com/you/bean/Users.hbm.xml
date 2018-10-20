@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.you.bean.Users" table="USERS" schema="SCOTT">
+        <id name="userid">
+            <column name="USERID" sql-type="number(11)" precision="11"/>
+            <generator class="sequence">
+                <param name="sequence_name">SEQ_DEPT</param>
+            </generator>
+        </id>
+        <property name="username">
+            <column name="USERNAME" sql-type="varchar2(30)" length="30"/>
+        </property>
+        <property name="userpassword">
+            <column name="USERPASSWORD" sql-type="varchar2(30)" length="30"/>
+        </property>
+        <property name="modifytime">
+            <column name="MODIFYTIME" sql-type="varchar2(30)" length="30"/>
+        </property>
+        <property name="roleid">
+            <column name="ROLEID" sql-type="number(11)" precision="11"/>
+        </property>
+        <property name="flag">
+            <column name="FLAG" sql-type="number(11)" precision="11" />
+        </property>
+        <property name="realname">
+            <column name="REALNAME" sql-type="varchar2(30)" length="30"/>
+        </property>
+        <property name="email">
+            <column name="EMAIL" sql-type="varchar2(30)" length="30"/>
+        </property>
+    </class>
+</hibernate-mapping>

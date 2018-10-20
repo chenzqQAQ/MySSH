@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.you.bean.Doctor" table="DOCTOR" schema="SCOTT">
+        <id name="docid">
+            <column name="DOCID" sql-type="number(11)" precision="11"/>
+            <generator class="sequence">
+                <param name="sequence_name">SEQ_EMP</param>
+            </generator>
+        </id>
+        <property name="doctorname">
+            <column name="DOCTORNAME" sql-type="varchar2(30)" length="30"/>
+        </property>
+        <property name="identifiertype">
+            <column name="IDENTIFIERTYPE" sql-type="number(11)" precision="11"/>
+        </property>
+        <property name="identifiernum">
+            <column name="IDENTIFIERNUM" sql-type="varchar2(100)" length="100"/>
+        </property>
+        <property name="phonenum">
+            <column name="PHONENUM" sql-type="varchar2(30)" length="30"/>
+        </property>
+        <property name="seatphonenum">
+            <column name="SEATPHONENUM" sql-type="varchar2(30)" length="30" />
+        </property>
+        <property name="sex">
+            <column name="SEX" sql-type="number(11)" precision="11"/>
+        </property>
+        <property name="age">
+            <column name="AGE" sql-type="number(11)" precision="11"/>
+        </property>
+        <property name="birthday">
+            <column name="BIRTHDAY" sql-type="date"/>
+        </property>
+        <property name="email">
+            <column name="EMAIL" sql-type="varchar2(50)" length="50"/>
+        </property>
+        <many-to-one name="dep" class="com.you.bean.Department" column="depid" lazy="false" cascade="save-update"
+                     unique="true"/>
+        <property name="flag">
+            <column name="FLAG" sql-type="number(11)" precision="11" default="0"/>
+        </property>
+        <property name="remark">
+            <column name="REMARK" sql-type="varchar2(100)" length="100"/>
+        </property>
+    </class>
+</hibernate-mapping>

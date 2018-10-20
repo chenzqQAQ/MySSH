@@ -16,15 +16,21 @@ package com.you.bean;
  *@date 2018/10/8 11:17
  */
 public class User {
-    private String name;
+    /**
+     * 用户名
+     */
+    private String userName;
+    /**
+     * 密码
+     */
     private String password;
 
-    public String getName() {
-        return name;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getPassword() {
@@ -46,7 +52,7 @@ public class User {
 
         User user = (User) o;
 
-        if (name != null ? !name.equals(user.name) : user.name != null) {
+        if (userName != null ? !userName.equals(user.userName) : user.userName != null) {
             return false;
         }
         if (password != null ? !password.equals(user.password) : user.password != null) {
@@ -58,7 +64,7 @@ public class User {
 
     @Override
     public int hashCode() {
-        int result = name != null ? name.hashCode() : 0;
+        int result = userName != null ? userName.hashCode() : 0;
         result = 31 * result + (password != null ? password.hashCode() : 0);
         return result;
     }

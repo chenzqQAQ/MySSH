@@ -12,7 +12,7 @@ import java.util.List;
  * @author 陈泽群
  * @date 2018/10/8 17:30
  */
-public interface DeptDao {
+public interface DeptDao{
     /**
      * 增加部门
      *

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+    http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd
+    http://www.springframework.org/schema/cache
+    http://www.springframework.org/schema/cache/spring-cache.xsd"
+>
+    <!--    <bean id="dataSource" userName="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+            <property userName="url" value="jdbc:oracle:thin:@localhost:1521:orcl"/>
+            <property userName="driverClassName" value="oracle.jdbc.OracleDriver"/>
+            <property userName="username" value="scott"/>
+            <property userName="password" value="tiger"/>
+        </bean>-->
+    <context:component-scan base-package="com.you.Service.impl,com.you.dao.impl"/>
+    <context:annotation-config/>
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+        <!--使用hibernate.cfg.xml配置文件-->
+        <!--<property userName="dataSource" ref="dataSource"/>-->
+        <property name="configLocations" value="classpath:hibernate.cfg.xml"/>
+    </bean>
+    <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <bean class="test.TestService" id="testService">
+        <property name="name" value="spring"/>
+    </bean>
+    <bean class="com.you.action.Login" id="login" scope="prototype">
+    </bean>
+    <bean id="deptAction" class="com.you.action.DeptAction">
+        <property name="deptService" ref="deptService"/>
+    </bean>
+    <bean id="deptService" class="com.you.Service.DeptService">
+        <property name="deptDao" ref="deptDao"/>
+    </bean>
+    <bean id="deptDao" class="com.you.dao.impl.DeptDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <!--<bean id="depDao" class="com.you.dao.impl.DepartmentDaoImpl">-->
+    <!--<property name="sessionFactory" ref="sessionFactory"/>-->
+    <!--</bean>-->
+    <!--<bean id="depService" class="com.you.Service.impl.DepServiceImpl">-->
+    <!--<property name="departmentDao" ref="depDao"/>-->
+    <!--</bean>-->
+    <!--<bean id="departAction" class="com.you.action.DepartAction">-->
+    <!--<property name="depService" ref="depService"/>-->
+    <!--</bean>-->
+    <bean id="userDao" class="com.you.dao.impl.UserDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <!--<bean id="registerDao" class="com.you.dao.impl.RegisterDAOImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>-->
+    <bean id="userService" class="com.you.Service.impl.UserServiceImpl">
+        <property name="userDao" ref="userDao"/>
+    </bean>
+    <!--<bean id="registerService" class="com.you.Service.impl.RegisterServiceImpl">
+        <property name="registerDAO" ref="registerDao"/>
+    </bean>-->
+    <bean id="userAction" class="com.you.action.UserAction">
+        <property name="userService" ref="userService"/>
+    </bean>
+    <!--  <bean id="registerAction" class="com.you.action.RegisterAction">
+          <property name="registerService" ref="registerService"/>
+      </bean>-->
+    <!--<bean id="docDao" class="com.you.dao.impl.DocDaoImpl">-->
+    <!--<property name="sessionFactory" ref="sessionFactory"/>-->
+    <!--</bean>-->
+    <!--<bean class="com.you.Service.impl.DocServiceImpl" id="docService">-->
+    <!--<property name="docDao" ref="docDao"/>-->
+    <!--</bean>-->
+    <!--<bean id="docAction" class="com.you.action.DocAction">-->
+    <!--<property name="docService" ref="docService"/>-->
+    <!--</bean>-->
+    <bean id="aop" class="com.you.bean.Aop"/>
+    <!--<tx:advice id="tran" tr></tx:advice>-->
+    <tx:advice id="interceptor" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="*Add" propagation="REQUIRED"/>
+            <tx:method name="update*" propagation="REQUIRED"/>
+            <tx:method name="del*" propagation="REQUIRED"/>
+            <tx:method name="*" read-only="true"/>
+        </tx:attributes>
+    </tx:advice>
+    <aop:config>
+        <!--声明一个切面-->
+        <aop:pointcut id="service" expression="execution(* com.you.Service.*.*(..))"/>
+        <aop:pointcut id="transaction" expression="execution(* com.you.Service.RegisterService.*(..))"/>
+        <aop:advisor advice-ref="interceptor" pointcut-ref="transaction" order="2"/>
+        <aop:aspect id="userAop" ref="aop" order="1">
+            <!--声明一个切入点-->
+            <!--声明通知类型-->
+            <aop:before method="beforeAop" pointcut-ref="service"/>
+            <aop:after method="afterAop" pointcut-ref="service"/>
+        </aop:aspect>
+    </aop:config>
+</beans>
