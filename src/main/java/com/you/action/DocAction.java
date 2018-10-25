@@ -21,6 +21,7 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import javax.servlet.http.HttpServletRequest;
@@ -34,6 +35,7 @@ import java.util.List;
  * @date 2018/10/17 20:21
  */
 @Controller
+@Scope("prototype")
 @ParentPackage("json-default")
 public class DocAction extends ActionSupport {
     private DocService docService;
@@ -92,7 +94,7 @@ public class DocAction extends ActionSupport {
      * @return
      */
     @Action(value = "docAjax", results = @Result(name = "success", type = "json", params = {"root", "result"}))
-    public String docFind() {
+    public String docAjax() {
         Gson gson = new Gson();
         System.out.println("科室id" + department.getDepid());
         result = gson.toJson(docService.findDocs(department));
@@ -112,10 +114,42 @@ public class DocAction extends ActionSupport {
             page.setPageNo(1);
         }
         doctors = docService.findDocs(doctor, page);
-        for (Doctor doctor1 : doctors) {
-            System.out.println(doctor1.getDoctorname());
-        }
         request.setAttribute("page", page);
+/*        if (doctor != null) {
+            if (doctor.getDocid() != 0) {
+                System.out.println(doctor.getDocid() + "-------------------");
+            }
+            if (StringUtils.isNotBlank(doctor.getDoctorname())) {
+                System.out.println(doctor.getDoctorname() + "-------------------");
+            }
+            if (doctor.getDep() != null) {
+                System.out.println(doctor.getDep().getDepid() + "-------------------");
+            }
+        }*/
+        return SUCCESS;
+    }
+
+    @Action(value = "docAdd", results = {@Result(name = "success", location = "/docsFind", type = "redirectAction")})
+    public String docAdd() {
+        docService.docAdd(doctor);
+        return SUCCESS;
+    }
+
+    @Action(value = "docFind", results = {@Result(name = "success", location = "/doctor/edit.jsp")})
+    public String docFind() {
+        doctor = docService.findDoc(doctor.getDocid());
+        return SUCCESS;
+    }
+
+    @Action(value = "docUpdate", results = {@Result(name = "success", location = "/docsFind", type = "redirectAction")})
+    public String docUpdate() {
+        docService.updateDoc(doctor);
+        return SUCCESS;
+    }
+
+    @Action(value = "docDel", results = {@Result(name = "success", location = "/docsFind", type = "redirectAction")})
+    public String docDel() {
+        docService.delDoc(doctor.getDocid());
         return SUCCESS;
     }
 }

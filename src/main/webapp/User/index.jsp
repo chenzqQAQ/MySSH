@@ -43,31 +43,34 @@
         //首页跳转
         function totalPage() {
             $("#pageNo").val(1);
-            $("#form1").attr("action", "/his/usersFindAllAction");
+            $("#form1").attr("action", "<%=path%>/userFind.action");
             $("#form1").submit();
             return false;
         }
+
         //上一页
         function up() {
             var k = parseInt($("#pageNo").val());
             $("#pageNo").val(k > 1 ? k - 1 : 1);
-            $("#form1").attr("action", "/his/usersFindAllAction");
+            $("#form1").attr("action", "<%=path%>/userFind.action");
             $("#form1").submit();
             return false;
         }
+
         //下一页
         function down() {
             var k = parseInt($("#pageNo").val());
             var k1 = parseInt($("#totalPage").val());
             $("#pageNo").val(k < k1 ? k + 1 : k1);
-            $("#form1").attr("action", "/his/usersFindAllAction");
+            $("#form1").attr("action", "<%=path%>/userFind.action");
             $("#form1").submit();
             return false;
         }
+
         //尾页
         function lastPage() {
             $("#pageNo").val($("#totalPage").val());
-            $("#form1").attr("action", "/his/usersFindAllAction");
+            $("#form1").attr("action", "<%=path%>/userFind.action");
             $("#form1").submit();
             return false;
         }
@@ -89,7 +92,7 @@
         function delAll() {
             var alls = document.getElementsByName("check");
             var ids = new Array();
-            var str = "/his/usersDelAction?action=delAll";
+            var str = "<%=path%>/usersDelAction?action=delAll";
             for (var i = 0; i < alls.length; i++) {
                 if (alls[i].checked) {
                     ids.push(alls[i].value);
@@ -106,10 +109,12 @@
                 alert("请选中要删除的项");
             }
         }
+
         //清空输入框
         function clearA() {
-           $('input[name="username"]') .val("");
+            $('input[name="username"]').val("");
         }
+
         //清空页面信息
         function clearB() {
             $("#pageNo").val("");
@@ -118,13 +123,13 @@
     <script type="text/javascript">
         $(function () {
             $('#newNav').click(function () {
-                window.location.href = "/his/User/addUser.jsp";
+                window.location.href = "<%=path%>/User/addUser.jsp";
             });
         });
     </script>
 </head>
 <body>
-<form id="form1" class="form-inline definewidth m20" action="/his/usersFindAllAction" method="post">
+<form id="form1" class="form-inline definewidth m20" action="<%=path%>/userAll.action" method="post">
     用户名称：
     <input type="text" name="username" id="username" class="abc input-default" placeholder="" value="${user.userName}">&nbsp;&nbsp;
     <button type="submit" class="btn btn-primary" onclick="clearB()">查询</button>
@@ -140,21 +145,20 @@
         <th width="10%">操作</th>
     </tr>
     </thead>
-    <c:forEach items="${users}" var="user" varStatus="id">
+    <c:forEach items="${usersList}" var="user" varStatus="id">
         <tr>
-            <td style="vertical-align:middle;"><input type="checkbox" name="check" value="${user.userID}"></td>
+            <td style="vertical-align:middle;"><input type="checkbox" name="check" value="${user.userid}"></td>
             <td style="text-align:center;">
-                <c:out value="${user.userName}"></c:out>
+                <c:out value="${user.username}"></c:out>
             </td>
             <td style="text-align:center;">
-                <c:out value="${user.realName}"></c:out>
+                <c:out value="${user.realname}"></c:out>
             </td>
             <td style="text-align:center;">
-                <c:out value="${user.roleName}"></c:out>
             </td>
             <td style="text-align:center;">
-                <a href="/his/usersFindAction?drugid=${user.userID}">编辑</a>&nbsp;&nbsp;&nbsp;<a
-                    href="/his/usersDelAction?drugid=${user.userID}">删除</a>
+                <a href="<%=path%>/userFind.action?users.userid=${user.userid}">编辑</a>&nbsp;&nbsp;&nbsp;<a
+                    href="<%=path%>/userDel.action?users.userid=${user.userid}">删除</a>
             </td>
         </tr>
     </c:forEach>

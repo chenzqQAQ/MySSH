@@ -24,7 +24,7 @@
             <column name="PHONENUM" sql-type="varchar2(30)" length="30"/>
         </property>
         <property name="seatphonenum">
-            <column name="SEATPHONENUM" sql-type="varchar2(30)" length="30" />
+            <column name="SEATPHONENUM" sql-type="varchar2(30)" length="30"/>
         </property>
         <property name="sex">
             <column name="SEX" sql-type="number(11)" precision="11"/>
@@ -38,13 +38,16 @@
         <property name="email">
             <column name="EMAIL" sql-type="varchar2(50)" length="50"/>
         </property>
-        <many-to-one name="dep" class="com.you.bean.Department" column="depid" lazy="false" cascade="save-update"
+        <many-to-one name="dep" class="com.you.bean.Department" column="depid" lazy="false" cascade="none"
                      unique="true"/>
         <property name="flag">
             <column name="FLAG" sql-type="number(11)" precision="11" default="0"/>
         </property>
         <property name="remark">
             <column name="REMARK" sql-type="varchar2(100)" length="100"/>
+        </property>
+        <property name="degree">
+            <column name="DEGREE" sql-type="number(2)" precision="2"/>
         </property>
     </class>
 </hibernate-mapping>

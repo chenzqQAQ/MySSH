@@ -204,7 +204,7 @@
             <td><input type="text" name="doctor.doctorname" value="${doctor.doctorname}"/></td>
 
             <td width="10%" class="tableleft">科室：</td>
-            <td><input type="text" name="depName" value=""/></td>
+            <td><input type="text" name="doctor.dep.depname" value="${doctor.dep.depname}"/></td>
         </tr>
         <tr>
             <td colspan="6">
@@ -238,14 +238,14 @@
                 <c:out value="${doctor.doctorname}"/>
             </td>
             <td style="vertical-align:middle;">
-                <c:out value=""/>
+                <c:out value="${doctor.birthday}"/>
             </td>
             <td style="vertical-align:middle;">
                 <c:out value="${doctor.dep.depname}"/>
             </td>
-            <td style="vertical-align:middle;"><a href="<%=path%>/doctorFindAction?id=${doctor.docid}">详情>>></a>&nbsp;&nbsp;&nbsp;
-                <a href="<%=path%>/doctorFindAction?id=${doctor.docid}">更改</a>&nbsp;&nbsp;&nbsp;
-                <a href="<%=path%>/doctorDelAction?id=${doctor.docid}">删除</a>
+            <td style="vertical-align:middle;"><a href="<%=path%>/docFind.action?doctor.docid=${doctor.docid}">详情>>></a>&nbsp;&nbsp;&nbsp;
+                <a href="<%=path%>/docFind.action?doctor.docid=${doctor.docid}">更改</a>&nbsp;&nbsp;&nbsp;
+                <a href="<%=path%>/docDel.action?doctor.docid=${doctor.docid}">删除</a>
             </td>
         </tr>
     </c:forEach>

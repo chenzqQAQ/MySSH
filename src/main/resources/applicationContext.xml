@@ -95,7 +95,7 @@
     <aop:config>
         <!--声明一个切面-->
         <aop:pointcut id="service" expression="execution(* com.you.Service.*.*(..))"/>
-        <aop:pointcut id="transaction" expression="execution(* com.you.Service.RegisterService.*(..))"/>
+        <aop:pointcut id="transaction" expression="execution(* com.you.Service.*.*(..))"/>
         <aop:advisor advice-ref="interceptor" pointcut-ref="transaction" order="2"/>
         <aop:aspect id="userAop" ref="aop" order="1">
             <!--声明一个切入点-->

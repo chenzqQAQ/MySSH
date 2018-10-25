@@ -38,9 +38,9 @@
         <action name="deptUpdate" class="deptAction" method="deptUpdate">
             <result name="success" type="redirectAction">deptlist</result>
         </action>
-        <action name="userAdd" class="userAction" method="add">
+        <!--<action name="userAdd" class="userAction" method="add">
             <result name="success">/success.jsp</result>
-        </action>
+        </action>-->
     </package>
 <!--    <package name="ajax" extends="json-default">
         <action name="depAjax" class="departAction" method="allDep">

@@ -1,6 +1,9 @@
 package com.you.dao;
 
+import com.you.Utils.Page;
 import com.you.bean.Users;
+
+import java.util.List;
 
 /**
  * UserDao
@@ -10,5 +13,14 @@ import com.you.bean.Users;
  * @date 2018/10/8 16:49
  */
 public interface UserDao {
-    public void add(Users user);
+    public void userAdd(Users user);
+
+    public void updateUser(Users user);
+
+    public void delUser(Users user);
+
+    public Users findUser(int id);
+
+    public List<Users> findUsers(Page page);
+    public int userCount();
 }

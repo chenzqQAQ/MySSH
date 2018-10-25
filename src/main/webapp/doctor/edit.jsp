@@ -2,22 +2,24 @@
          pageEncoding="UTF-8" %>
 <%@page isELIgnored="false" %>
 <!DOCTYPE html>
+<% String path = request.getContextPath();
+%>
 <html>
 <head>
     <title>修改医生---2015</title>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="/his/Css/bootstrap.css"/>
-    <link rel="stylesheet" type="text/css" href="/his/Css/bootstrap-responsive.css"/>
-    <link rel="stylesheet" type="text/css" href="/his/Css/style.css"/>
-    <script type="text/javascript" src="/his/Js/jquery.js"></script>
-    <%--<script type="text/javascript" src="/his/Js/jquery.sorted.js"></script>--%>
-    <script type="text/javascript" src="/his/Js/bootstrap.js"></script>
-    <script type="text/javascript" src="/his/Js/ckform.js"></script>
-    <script type="text/javascript" src="/his/Js/common.js"></script>
-    <script type="text/javascript" src="/his/Js/ckeditor/ckeditor.js"></script>
-    <script type="text/javascript" src="/his/Js/My97DatePicker/WdatePicker.js"></script>
-    <script type="text/javascript" src="/his/Js/jquery.validate.min.js"></script>
-    <script type="text/javascript" src="/his/Js/messages_zh.js"></script>
+    <link rel="stylesheet" type="text/css" href="<%=path%>/Css/bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="<%=path%>/Css/bootstrap-responsive.css"/>
+    <link rel="stylesheet" type="text/css" href="<%=path%>/Css/style.css"/>
+    <script type="text/javascript" src="<%=path%>/Js/jquery.js"></script>
+    <%--<script type="text/javascript" src="<%=path%>/Js/jquery.sorted.js"></script>--%>
+    <script type="text/javascript" src="<%=path%>/Js/bootstrap.js"></script>
+    <script type="text/javascript" src="<%=path%>/Js/ckform.js"></script>
+    <script type="text/javascript" src="<%=path%>/Js/common.js"></script>
+    <script type="text/javascript" src="<%=path%>/Js/ckeditor/ckeditor.js"></script>
+    <script type="text/javascript" src="<%=path%>/Js/My97DatePicker/WdatePicker.js"></script>
+    <script type="text/javascript" src="<%=path%>/Js/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="<%=path%>/Js/messages_zh.js"></script>
 
     <style type="text/css">
         body {
@@ -128,21 +130,15 @@
 
         function findAllDep() {
             $.ajax({
-                url: "/his/departmentAction",
-                data: {
-                    action: "findAll"
-                },
+                url: "<%=path%>/depAjax.action",
                 success: function (msg) {
-                    console.log("ajax请求成功，开始执行成功后的回调函数");
                     var deps = eval("(" + msg + ")");
                     $('#depId').empty();
                     $.each(deps, function (item, dep) {
-                        console.log(dep['id']);
-                        console.log(dep['depName']);
                         var option = $("<option></option>");
-                        option.val(dep['id']).text(dep['depName']).appendTo($('#depId'));
+                        option.val(dep['depid']).text(dep['depname']).appendTo($('#depId'));
                     })
-                    $("#depId").val(${doctor.depId});
+                    $("#depId").val(${doctor.dep.depid});
                 }
 
             });
@@ -150,11 +146,11 @@
 
         $(function () {
             $('#backid').click(function () {
-                window.location.href = "/his/doctorFindAllAction";
+                window.location.href = "<%=path%>/docsFind.action";
             });
             findAllDep();
             $("input[name='sex'][value=${doctor.sex}]").prop("checked", "true");
-            $("#identifierType").val(${doctor.identifierType});
+            $("#identifierType").val(${doctor.identifiertype});
             $("#degree").val(${doctor.degree});
             $('#birthday').blur(function () {
                 var myyear = $(this).val();
@@ -185,18 +181,18 @@
     </script>
 </head>
 <body>
-<form id="form1" action="/his/doctorUpdateAction" method="post" class="definewidth m20">
+<form id="form1" action="<%=path%>/docUpdate.action" method="post" class="definewidth m20">
     <table class="table table-bordered table-hover definewidth m10">
         <tr>
-            <input type="hidden" name="id" value="${doctor.id}">
+            <input type="hidden" name="doctor.docid" value="${doctor.docid}">
             <td width="10%" class="tableleft">姓名</td>
-            <td><input type="hidden" name="doctorName" value="${doctor.doctorName}"/>
-                <input type="text" name="doctorName" value="${doctor.doctorName}" disabled/></td>
+            <td><input type="hidden" name="doctor.doctorname" value="${doctor.doctorname}"/>
+                <input type="text" name="doctor.doctorname" value="${doctor.doctorname}" disabled/></td>
         </tr>
         <tr>
             <td width="10%" class="tableleft">证件类型</td>
-            <td><input type="hidden" name="identifierType" value="${doctor.identifierType}"/>
-                <select name="identifierType" id="identifierType" disabled>
+            <td><input type="hidden" name="doctor.identifiertype" value="${doctor.identifiertype}"/>
+                <select name="doctor.identifiertype" id="identifierType" disabled>
                     <option value="0">身份证</option>
                     <option value="1">护照</option>
                     <option value="2">军人证</option>
@@ -204,51 +200,51 @@
         </tr>
         <tr>
             <td width="10%" class="tableleft">证件号</td>
-            <td><input type="hidden" name="identifierNum" value="${doctor.identifierNum}"/>
-                <input type="text" name="identifierNum" value="${doctor.identifierNum}" disabled/></td>
+            <td><input type="hidden" name="doctor.identifiernum" value="${doctor.identifiernum}"/>
+                <input type="text" name="doctor.identifiernum" value="${doctor.identifiernum}" disabled/></td>
         </tr>
         <tr>
             <td width="10%" class="tableleft">手机</td>
-            <td><input type="text" name="phoneNum" value="${doctor.phoneNum}"/></td>
+            <td><input type="text" name="doctor.phonenum" value="${doctor.phonenum}"/></td>
         </tr>
         <tr>
             <td width="10%" class="tableleft">座机</td>
-            <td><input type="text" name="setaPhoneNum" value="${doctor.setaPhoneNum}"/></td>
+            <td><input type="text" name="doctor.seatphonenum" value="${doctor.seatphonenum}"/></td>
         </tr>
         <tr>
             <td width="10%" class="tableleft">性别</td>
-            <td><input type="radio" name="sex" value="1" checked/>男&nbsp;&nbsp;&nbsp;
-                <input type="radio" name="sex" value="0"/>女
+            <td><input type="radio" name="doctor.sex" value="1" checked/>男&nbsp;&nbsp;&nbsp;
+                <input type="radio" name="doctor.sex" value="0"/>女
             </td>
         </tr>
         <tr>
             <td width="10%" class="tableleft">出生年月</td>
-            <td><input type="text" name="birthday" value="${doctor.birthday}" id="birthday"
+            <td><input type="text" name="doctor.birthday" value="${doctor.birthday}" id="birthday"
                        class="Wdate"
                        onfocus="WdatePicker(datepicker)"/></td>
         </tr>
         <tr>
             <td width="10%" class="tableleft">年龄</td>
             <td>
-                <input type="hidden" name="age" value="${doctor.age}" id="age"/>
+                <input type="hidden" name="doctor.age" value="${doctor.age}" id="age"/>
                 <span>${doctor.age}</span>
             </td>
         </tr>
         <tr>
             <td width="10%" class="tableleft">电子邮箱</td>
-            <td><input type="text" name="email" value="${doctor.email}"/></td>
+            <td><input type="text" name="doctor.email" value="${doctor.email}"/></td>
         </tr>
         <tr>
             <td width="10%" class="tableleft">所属科室</td>
             <td>
-                <select name="depId" id="depId">
+                <select name="doctor.dep.depid" id="depId">
                 </select>
             </td>
         </tr>
         <tr>
             <td width="10%" class="tableleft">学历</td>
             <td>
-                <select name="degree" id="degree">
+                <select name="doctor.degree" id="degree">
                     <option value="0">专科</option>
                     <option value="1">本科</option>
                     <option value="2">博士</option>
@@ -258,7 +254,7 @@
         </tr>
         <tr>
             <td width="10%" class="tableleft">备注</td>
-            <td><textarea name="remark" id="remark">${doctor.remark}</textarea></td>
+            <td><textarea name="doctor.remark" id="remark">${doctor.remark}</textarea></td>
         </tr>
         <tr>
             <td colspan="2">

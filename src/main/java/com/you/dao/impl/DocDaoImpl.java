@@ -16,6 +16,7 @@ import com.you.dao.DocDao;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
@@ -72,12 +73,23 @@ public class DocDaoImpl extends HibernateDaoSupport implements DocDao {
 
     @Override
     public void delDoc(int id) {
-        String hql = "update Doctor set flag=0 where docid=:docid";
+        String hql = "update Doctor set flag=1 where docid=:docid";
         Session session = getHibernateTemplate().getSessionFactory().openSession();
-        Query query = session.createQuery(hql);
-        query.setParameter("docid", id);
-        query.executeUpdate();
-        session.close();
+        Transaction transaction = session.beginTransaction();
+        try {
+            Query query = session.createQuery(hql);
+            query.setParameter("docid", id);
+            System.out.println(id);
+            query.executeUpdate();
+            transaction.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (transaction != null) {
+                transaction.rollback();
+            }
+        } finally {
+            session.close();
+        }
 
     }
 
@@ -92,8 +104,11 @@ public class DocDaoImpl extends HibernateDaoSupport implements DocDao {
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
         CriteriaQuery<Long> criteria = criteriaBuilder.createQuery(Long.class);
         Root<Doctor> root = criteria.from(Doctor.class);
+        Root<Department> root1 = criteria.from(Department.class);
         criteria.select(criteriaBuilder.count(root.get("docid")));
         List<Predicate> predicates = new ArrayList<>();
+        predicates.add(criteriaBuilder.equal(root.get("dep"), root1));
+        predicates.add(criteriaBuilder.equal(root.get("flag"), 0));
         if (doctor != null) {
             if (doctor.getDocid() != 0) {
                 predicates.add(criteriaBuilder.equal(root.get("docid"), doctor.getDocid()));
@@ -102,7 +117,9 @@ public class DocDaoImpl extends HibernateDaoSupport implements DocDao {
                 predicates.add(criteriaBuilder.like(root.<String>get("doctorname"), String.format("%%%s%%", StringUtils.trim(doctor.getDoctorname()))));
             }
             if (doctor.getDep() != null) {
-                predicates.add(criteriaBuilder.equal(root.get("dep"), doctor.getDep()));
+                // predicates.add(criteriaBuilder.equal(root.get("dep"), doctor.getDep()));
+                // criteriaBuilder.
+                predicates.add(criteriaBuilder.like(root1.get("depname"), String.format("%%%s%%", StringUtils.trim(doctor.getDep().getDepname()))));
             }
         }
         if (predicates.size() != 0) {
@@ -119,9 +136,12 @@ public class DocDaoImpl extends HibernateDaoSupport implements DocDao {
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
         CriteriaQuery<Doctor> criteria = criteriaBuilder.createQuery(Doctor.class);
         Root<Doctor> root = criteria.from(Doctor.class);
+        Root<Department> root1 = criteria.from(Department.class);
         criteria.select(root);
         List<Predicate> predicates = new ArrayList<>();
         List<Doctor> list = new ArrayList<>();
+        predicates.add(criteriaBuilder.equal(root.get("dep"), root1));
+        predicates.add(criteriaBuilder.equal(root.get("flag"), 0));
         if (doctor != null) {
             if (doctor.getDocid() != 0) {
                 predicates.add(criteriaBuilder.equal(root.get("docid"), doctor.getDocid()));
@@ -130,7 +150,7 @@ public class DocDaoImpl extends HibernateDaoSupport implements DocDao {
                 predicates.add(criteriaBuilder.like(root.<String>get("doctorname"), String.format("%%%s%%", StringUtils.trim(doctor.getDoctorname()))));
             }
             if (doctor.getDep() != null) {
-                predicates.add(criteriaBuilder.equal(root.get("dep"), doctor.getDep()));
+                predicates.add(criteriaBuilder.like(root1.get("depname"), String.format("%%%s%%", StringUtils.trim(doctor.getDep().getDepname()))));
             }
         }
         if (predicates.size() != 0) {

@@ -51,20 +51,25 @@ public class Test {
         Page page = new Page();
         ((DocDaoImpl) docDao).setSuperSessionFactory(SESSIONFACTORY);
         Doctor doctor = new Doctor();
-        doctor.setDoctorname("  1 ");
+        // doctor.setDocid(8121);
+        docDao.delDoc(8121);
+        // Department department = new Department();
+        // department.setDepname("内科");
+        // doctor.setDep(department);
+        // doctor.setDoctorname("  1 ");
         // doctor.setDocid(10);
-        int count = docDao.docCount(doctor);
-        page.setPageSize(3);
-        page.setTotalCount(count);
-        page.setPageNo(1);
-        if (count != 0) {
-            List<Doctor> list = docDao.findDocs(doctor, page);
-            System.out.println("查询结果");
-            for (Doctor doctor1 : list) {
-                System.out.println(String.format("医生姓名%s,医生id%d", doctor1.getDoctorname(), doctor1.getDocid()));
-            }
-        }
-        System.out.println("总条数" + count);
+        // int count = docDao.docCount(doctor);
+        // page.setPageSize(3);
+        // page.setTotalCount(count);
+        // page.setPageNo(1);
+        // if (count != 0) {
+        //     List<Doctor> list = docDao.findDocs(doctor, page);
+        //     System.out.println("查询结果");
+        //     for (Doctor doctor1 : list) {
+        //         System.out.println(String.format("医生姓名%s,医生id%d", doctor1.getDoctorname(), doctor1.getDocid()));
+        //     }
+        // }
+        // System.out.println("总条数" + count);
         // ApplicationContext ac=new FileSystemXmlApplicationContext("web/WEB-INF/applicationContext.xml");
         // TestService ts= (TestService) ac.getBean("testService");
         // ts.hello();

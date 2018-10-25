@@ -9,7 +9,7 @@
  */
 package com.you.bean;
 
-import java.sql.Time;
+import java.util.Date;
 
 /**
  * Doctor
@@ -54,7 +54,7 @@ public class Doctor {
     /**
      * 生日
      */
-    private Time birthday;
+    private Date birthday;
     /**
      * 电子邮箱
      */
@@ -71,6 +71,18 @@ public class Doctor {
      * 备注
      */
     private String remark;
+    /**
+     * 学历
+     */
+    private int degree;
+
+    public int getDegree() {
+        return degree;
+    }
+
+    public void setDegree(int degree) {
+        this.degree = degree;
+    }
 
     public int getDocid() {
         return docid;
@@ -136,11 +148,15 @@ public class Doctor {
         this.age = age;
     }
 
-    public Time getBirthday() {
+    public Date getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Time birthday) {
+    /**
+     * @param birthday
+     * @since 1.8+
+     */
+    public void setBirthday(Date birthday) {
         this.birthday = birthday;
     }
 

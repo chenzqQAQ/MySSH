@@ -1,19 +1,21 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="utf-8" %>
 <!DOCTYPE html>
+<% String path = request.getContextPath();
+%>
 <html>
 <head>
     <title></title>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="../Css/bootstrap.css"/>
-    <link rel="stylesheet" type="text/css" href="../Css/bootstrap-responsive.css"/>
-    <link rel="stylesheet" type="text/css" href="../Css/style.css"/>
-    <script type="text/javascript" src="../Js/jquery.js"></script>
-    <%--<script type="text/javascript" src="../Js/jquery.sorted.js"></script>--%>
-    <script type="text/javascript" src="../Js/bootstrap.js"></script>
-    <script type="text/javascript" src="../Js/ckform.js"></script>
-    <script type="text/javascript" src="../Js/common.js"></script>
-    <script type="text/javascript" src="../Js/jquery.validate.min.js"></script>
-    <script type="text/javascript" src="../Js/messages_zh.js"></script>
+    <link rel="stylesheet" type="text/css" href="<%=path%>/Css/bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="<%=path%>/Css/bootstrap-responsive.css"/>
+    <link rel="stylesheet" type="text/css" href="<%=path%>/Css/style.css"/>
+    <script type="text/javascript" src="<%=path%>/Js/jquery.js"></script>
+    <%--<script type="text/javascript" src="<%=path%>/Js/jquery.sorted.js"></script>--%>
+    <script type="text/javascript" src="<%=path%>/Js/bootstrap.js"></script>
+    <script type="text/javascript" src="<%=path%>/Js/ckform.js"></script>
+    <script type="text/javascript" src="<%=path%>/Js/common.js"></script>
+    <script type="text/javascript" src="<%=path%>/Js/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="<%=path%>/Js/messages_zh.js"></script>
 
     <style type="text/css">
         body {
@@ -39,7 +41,7 @@
         $(function () {
             console.log("jQuery可用");
             $('#backid').click(function () {
-                window.location.href = "/his/usersFindAllAction";
+                window.location.href = "<%=path%>/userAll.action";
             });
             $('#userName').blur(function () {
                 console.log("用户名失去焦点");
@@ -69,7 +71,7 @@
             $("#form1").validate(
                 {
                     // debug: true,
-                    onfocusout:function (element) {
+                    onfocusout: function (element) {
                         $(element).valid();
                     },
                     rules: {
@@ -141,7 +143,7 @@
     </style>
 </head>
 <body>
-<form id="form1" action="userAdd" method="post" class="definewidth m20">
+<form id="form1" action="<%=path%>/userAdd.action" method="post" class="definewidth m20">
     <input type="hidden" name="id" value="{$user.id}"/>
     <table class="table table-bordered table-hover definewidth m10">
         <tr>
